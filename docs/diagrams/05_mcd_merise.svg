@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 800" font-family="Inter, Arial, sans-serif">
+  <rect width="1120" height="800" fill="#ffffff"/>
+  <text x="560" y="32" text-anchor="middle" font-size="20" font-weight="800" fill="#1e293b">Modèle Conceptuel de Données (MCD — Merise)</text>
+  <style>
+    .ent{fill:#ffffff;stroke:#6366f1;stroke-width:2}
+    .enth{fill:#6366f1}
+    .entt{font-size:13px;font-weight:800;fill:#ffffff;text-anchor:middle}
+    .f{font-size:11px;fill:#334155}
+    .fk{font-size:11px;fill:#334155;font-style:italic}
+    .assoc{fill:#fef3c7;stroke:#f59e0b;stroke-width:1.5}
+    .at{font-size:11px;font-weight:700;fill:#92400e;text-anchor:middle}
+    .ap{font-size:9px;fill:#b45309;text-anchor:middle}
+    .lnk{stroke:#94a3b8;stroke-width:1.4}
+    .card{font-size:10px;font-weight:700;fill:#1e293b}
+  </style>
+
+  <!-- ===== ENTITIES ===== -->
+  <!-- FAMILLE -->
+  <g>
+    <rect class="ent" x="40" y="90" width="150" height="86" rx="4"/>
+    <rect class="enth" x="40" y="90" width="150" height="22" rx="4"/>
+    <text class="entt" x="115" y="106">FAMILLE</text>
+    <text class="f" x="50" y="130" font-weight="700">id_famille</text>
+    <text class="f" x="50" y="148">code</text>
+    <text class="f" x="50" y="166">nom</text>
+  </g>
+  <!-- ATTRIBUT -->
+  <g>
+    <rect class="ent" x="40" y="300" width="160" height="120" rx="4"/>
+    <rect class="enth" x="40" y="300" width="160" height="22" rx="4"/>
+    <text class="entt" x="120" y="316">ATTRIBUT</text>
+    <text class="f" x="50" y="340" font-weight="700">id_attribut</text>
+    <text class="f" x="50" y="358">code, libelle</text>
+    <text class="f" x="50" y="376">type</text>
+    <text class="f" x="50" y="394">requis, localisable</text>
+    <text class="f" x="50" y="412">options, unite</text>
+  </g>
+  <!-- PRODUIT (central) -->
+  <g>
+    <rect class="ent" x="440" y="250" width="190" height="150" rx="4"/>
+    <rect class="enth" x="440" y="250" width="190" height="22" rx="4"/>
+    <text class="entt" x="535" y="266">PRODUIT</text>
+    <text class="f" x="450" y="290" font-weight="700">id_produit</text>
+    <text class="f" x="450" y="308">sku, nom</text>
+    <text class="f" x="450" y="326">statut</text>
+    <text class="f" x="450" y="344">completude</text>
+    <text class="f" x="450" y="362">date_creation</text>
+    <text class="f" x="450" y="380">date_maj</text>
+  </g>
+  <!-- CATEGORIE -->
+  <g>
+    <rect class="ent" x="900" y="90" width="160" height="70" rx="4"/>
+    <rect class="enth" x="900" y="90" width="160" height="22" rx="4"/>
+    <text class="entt" x="980" y="106">CATEGORIE</text>
+    <text class="f" x="910" y="130" font-weight="700">id_categorie</text>
+    <text class="f" x="910" y="148">nom</text>
+  </g>
+  <!-- ASSET -->
+  <g>
+    <rect class="ent" x="900" y="250" width="160" height="86" rx="4"/>
+    <rect class="enth" x="900" y="250" width="160" height="22" rx="4"/>
+    <text class="entt" x="980" y="266">ASSET</text>
+    <text class="f" x="910" y="290" font-weight="700">id_asset</text>
+    <text class="f" x="910" y="308">type, url</text>
+    <text class="f" x="910" y="326">alt, position</text>
+  </g>
+  <!-- CANAL -->
+  <g>
+    <rect class="ent" x="900" y="430" width="160" height="70" rx="4"/>
+    <rect class="enth" x="900" y="430" width="160" height="22" rx="4"/>
+    <text class="entt" x="980" y="446">CANAL</text>
+    <text class="f" x="910" y="470" font-weight="700">id_canal</text>
+    <text class="f" x="910" y="488">code, format</text>
+  </g>
+  <!-- LOG_WORKFLOW -->
+  <g>
+    <rect class="ent" x="440" y="600" width="190" height="110" rx="4"/>
+    <rect class="enth" x="440" y="600" width="190" height="22" rx="4"/>
+    <text class="entt" x="535" y="616">LOG_WORKFLOW</text>
+    <text class="f" x="450" y="640" font-weight="700">id_log</text>
+    <text class="f" x="450" y="658">statut_avant</text>
+    <text class="f" x="450" y="676">statut_apres</text>
+    <text class="f" x="450" y="694">commentaire, date</text>
+  </g>
+  <!-- UTILISATEUR -->
+  <g>
+    <rect class="ent" x="40" y="600" width="160" height="100" rx="4"/>
+    <rect class="enth" x="40" y="600" width="160" height="22" rx="4"/>
+    <text class="entt" x="120" y="616">UTILISATEUR</text>
+    <text class="f" x="50" y="640" font-weight="700">id_utilisateur</text>
+    <text class="f" x="50" y="658">username</text>
+    <text class="f" x="50" y="676">mot_de_passe_hash</text>
+    <text class="f" x="50" y="694">role</text>
+  </g>
+
+  <!-- ===== ASSOCIATIONS ===== -->
+  <!-- possède : FAMILLE-ATTRIBUT -->
+  <ellipse class="assoc" cx="115" cy="238" rx="55" ry="26"/><text class="at" x="115" y="242">possède</text>
+  <line class="lnk" x1="115" y1="176" x2="115" y2="212"/><text class="card" x="120" y="196">1,n</text>
+  <line class="lnk" x1="115" y1="264" x2="115" y2="300"/><text class="card" x="120" y="288">1,1</text>
+
+  <!-- caractérise : FAMILLE-PRODUIT -->
+  <ellipse class="assoc" cx="315" cy="160" rx="62" ry="26"/><text class="at" x="315" y="156">caractérise</text><text class="ap" x="315" y="170">(famille du produit)</text>
+  <line class="lnk" x1="190" y1="140" x2="255" y2="155"/><text class="card" x="205" y="135">1,n</text>
+  <line class="lnk" x1="377" y1="170" x2="470" y2="255"/><text class="card" x="430" y="210">1,1</text>
+
+  <!-- valorise : PRODUIT-ATTRIBUT (porteuse) -->
+  <ellipse class="assoc" cx="300" cy="360" rx="70" ry="34"/><text class="at" x="300" y="356">valorise</text><text class="ap" x="300" y="370">valeur, langue</text>
+  <line class="lnk" x1="200" y1="370" x2="230" y2="362"/><text class="card" x="205" y="358">0,n</text>
+  <line class="lnk" x1="370" y1="350" x2="440" y2="330"/><text class="card" x="400" y="335">0,n</text>
+
+  <!-- classé : PRODUIT-CATEGORIE -->
+  <ellipse class="assoc" cx="760" cy="160" rx="55" ry="26"/><text class="at" x="760" y="164">classé&#160;dans</text>
+  <line class="lnk" x1="630" y1="270" x2="710" y2="172"/><text class="card" x="660" y="215">0,1</text>
+  <line class="lnk" x1="815" y1="150" x2="900" y2="130"/><text class="card" x="855" y="130">0,n</text>
+
+  <!-- compose (réflexive catégorie) -->
+  <path class="lnk" d="M1060 110 H1095 V170 H980 V160" fill="none"/><text class="card" x="1098" y="115">0,1</text><text class="card" x="985" y="185">0,n</text>
+  <text class="ap" x="1040" y="205" fill="#b45309">se compose (hiérarchie)</text>
+
+  <!-- illustré : PRODUIT-ASSET -->
+  <ellipse class="assoc" cx="760" cy="300" rx="55" ry="26"/><text class="at" x="760" y="304">illustré&#160;par</text>
+  <line class="lnk" x1="630" y1="320" x2="705" y2="305"/><text class="card" x="650" y="312">0,n</text>
+  <line class="lnk" x1="815" y1="298" x2="900" y2="293"/><text class="card" x="855" y="288">1,1</text>
+
+  <!-- diffusé : PRODUIT-CANAL (n,m) -->
+  <ellipse class="assoc" cx="760" cy="450" rx="55" ry="26"/><text class="at" x="760" y="454">diffusé&#160;sur</text>
+  <line class="lnk" x1="630" y1="380" x2="710" y2="440"/><text class="card" x="655" y="415">0,n</text>
+  <line class="lnk" x1="815" y1="455" x2="900" y2="462"/><text class="card" x="855" y="450">0,n</text>
+
+  <!-- réflexive produit : lié_à -->
+  <path class="lnk" d="M440 360 H400 V470 H520 V400" fill="none"/>
+  <ellipse class="assoc" cx="400" cy="470" rx="48" ry="22"/><text class="at" x="400" y="468">lié à</text><text class="ap" x="400" y="481">(type)</text>
+  <text class="card" x="408" y="408">0,n</text><text class="card" x="525" y="418">0,n</text>
+
+  <!-- tracé : PRODUIT-LOG -->
+  <line class="lnk" x1="535" y1="400" x2="535" y2="600"/>
+  <ellipse class="assoc" cx="535" cy="500" rx="48" ry="22"/><text class="at" x="535" y="504">tracé&#160;par</text>
+  <text class="card" x="540" y="430">1,1</text><text class="card" x="540" y="590">0,n</text>
+
+  <!-- effectue : UTILISATEUR-LOG -->
+  <ellipse class="assoc" cx="315" cy="655" rx="50" ry="24"/><text class="at" x="315" y="659">effectue</text>
+  <line class="lnk" x1="200" y1="652" x2="265" y2="655"/><text class="card" x="210" y="648">1,1</text>
+  <line class="lnk" x1="365" y1="655" x2="440" y2="655"/><text class="card" x="385" y="648">0,n</text>
+
+  <text x="40" y="780" font-size="11" fill="#64748b" font-style="italic">Cardinalités Merise (min, max). L'association « valorise » porte les propriétés valeur et langue → table associative AttributeValue dans le MLD.</text>
+</svg>

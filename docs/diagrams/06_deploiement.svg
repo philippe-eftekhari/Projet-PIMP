@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" font-family="Inter, Arial, sans-serif">
+  <rect width="1000" height="620" fill="#ffffff"/>
+  <text x="500" y="32" text-anchor="middle" font-size="20" font-weight="800" fill="#1e293b">Diagramme de déploiement (production)</text>
+  <style>
+    .node{fill:#f8fafc;stroke:#475569;stroke-width:2}
+    .nt{font-size:13px;font-weight:800;fill:#1e293b}
+    .ns{font-size:10px;fill:#64748b}
+    .cont{fill:#eef2ff;stroke:#6366f1;stroke-width:1.5}
+    .ct{font-size:12px;font-weight:700;fill:#3730a3;text-anchor:middle}
+    .cs{font-size:10px;fill:#64748b;text-anchor:middle}
+    .db{fill:#fef3c7;stroke:#f59e0b;stroke-width:1.5}
+    .link{stroke:#1e293b;stroke-width:1.6}
+    .lt{font-size:10px;fill:#1e293b;font-weight:700}
+  </style>
+  <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#1e293b"/></marker></defs>
+
+  <!-- Client -->
+  <rect class="node" x="40" y="230" width="180" height="120" rx="6"/>
+  <text class="nt" x="60" y="258">Poste client</text>
+  <text class="ns" x="60" y="276">« device »</text>
+  <rect class="cont" x="60" y="288" width="140" height="46" rx="6"/>
+  <text class="ct" x="130" y="308">Navigateur web</text>
+  <text class="cs" x="130" y="324">React (SPA)</text>
+
+  <!-- HTTPS link -->
+  <line class="link" x1="220" y1="300" x2="350" y2="300" marker-end="url(#ar)"/>
+  <text class="lt" x="245" y="292">HTTPS</text>
+
+  <!-- Server node -->
+  <rect class="node" x="350" y="80" width="610" height="460" rx="8"/>
+  <text class="nt" x="372" y="108">Serveur applicatif — hôte Docker (Linux)</text>
+  <text class="ns" x="372" y="126">« execution environment » · Docker Compose</text>
+
+  <!-- reverse proxy / nginx -->
+  <rect class="cont" x="380" y="150" width="220" height="80" rx="6"/>
+  <text class="ct" x="490" y="180">Conteneur frontend</text>
+  <text class="cs" x="490" y="198">nginx — sert le build React</text>
+  <text class="cs" x="490" y="214">+ reverse proxy /api</text>
+
+  <!-- backend -->
+  <rect class="cont" x="380" y="290" width="220" height="90" rx="6"/>
+  <text class="ct" x="490" y="318">Conteneur backend</text>
+  <text class="cs" x="490" y="336">FastAPI + Uvicorn</text>
+  <text class="cs" x="490" y="352">API REST (port 8000)</text>
+  <text class="cs" x="490" y="368">JWT · RBAC · Pydantic</text>
+
+  <!-- DB -->
+  <g>
+    <path class="db" d="M720 300 a90 16 0 0 0 180 0 v70 a90 16 0 0 1 -180 0 z"/>
+    <ellipse class="db" cx="810" cy="300" rx="90" ry="16"/>
+    <text class="ct" x="810" y="296" fill="#92400e">PostgreSQL</text>
+    <text class="cs" x="810" y="345" fill="#92400e">base produits</text>
+    <text class="cs" x="810" y="360" fill="#92400e">(volume persistant)</text>
+  </g>
+
+  <!-- internal links -->
+  <line class="link" x1="490" y1="230" x2="490" y2="290" marker-end="url(#ar)"/>
+  <text class="lt" x="500" y="265">proxy HTTP</text>
+  <line class="link" x1="600" y1="335" x2="720" y2="335" marker-end="url(#ar)"/>
+  <text class="lt" x="620" y="328">SQL / TCP 5432</text>
+
+  <!-- external channels -->
+  <rect class="node" x="380" y="430" width="540" height="90" rx="6"/>
+  <text class="nt" x="400" y="456">Canaux de diffusion (systèmes externes)</text>
+  <rect class="cont" x="400" y="468" width="120" height="40" rx="6"/><text class="cs" x="460" y="492">Site e-commerce</text>
+  <rect class="cont" x="530" y="468" width="120" height="40" rx="6"/><text class="cs" x="590" y="492">Marketplace</text>
+  <rect class="cont" x="660" y="468" width="110" height="40" rx="6"/><text class="cs" x="715" y="492">App mobile</text>
+  <rect class="cont" x="780" y="468" width="120" height="40" rx="6"/><text class="cs" x="840" y="492">Catalogue/PDF</text>
+  <line class="link" x1="500" y1="380" x2="500" y2="430" marker-end="url(#ar)"/>
+  <text class="lt" x="510" y="410">flux export</text>
+</svg>

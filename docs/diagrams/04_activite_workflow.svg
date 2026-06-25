@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720" font-family="Inter, Arial, sans-serif">
+  <rect width="900" height="720" fill="#ffffff"/>
+  <text x="450" y="32" text-anchor="middle" font-size="19" font-weight="800" fill="#1e293b">Diagramme d'activité — Cycle de vie d'un produit</text>
+  <style>
+    .act{fill:#eef2ff;stroke:#6366f1;stroke-width:1.5;rx:18}
+    .at{font-size:13px;fill:#1e293b;text-anchor:middle;font-weight:600}
+    .dec{fill:#fef3c7;stroke:#f59e0b;stroke-width:1.5}
+    .dt{font-size:11px;fill:#92400e;text-anchor:middle}
+    .flow{stroke:#475569;stroke-width:1.6;fill:none}
+    .lbl{font-size:11px;fill:#475569}
+    .state{font-size:10px;fill:#3730a3;font-weight:700;text-anchor:middle}
+  </style>
+  <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#475569"/></marker></defs>
+
+  <!-- start -->
+  <circle cx="450" cy="60" r="11" fill="#1e293b"/>
+  <line class="flow" x1="450" y1="71" x2="450" y2="95" marker-end="url(#ar)"/>
+
+  <!-- create -->
+  <rect class="act" x="350" y="98" width="200" height="44" rx="18"/><text class="at" x="450" y="125">Créer le produit (brouillon)</text>
+  <text class="state" x="600" y="124">statut: draft</text>
+  <line class="flow" x1="450" y1="142" x2="450" y2="168" marker-end="url(#ar)"/>
+
+  <!-- enrich -->
+  <rect class="act" x="330" y="170" width="240" height="44" rx="18"/><text class="at" x="450" y="197">Enrichir (attributs, langues, médias)</text>
+  <line class="flow" x1="450" y1="214" x2="450" y2="240" marker-end="url(#ar)"/>
+
+  <!-- decision completeness -->
+  <polygon class="dec" points="450,242 545,290 450,338 355,290"/>
+  <text class="dt" x="450" y="285">Complétude</text>
+  <text class="dt" x="450" y="300">≥ 60% ?</text>
+  <!-- non -> back to enrich -->
+  <path class="flow" d="M355 290 H250 V192 H330" marker-end="url(#ar)"/>
+  <text class="lbl" x="265" y="240">non</text>
+  <!-- oui -->
+  <line class="flow" x1="450" y1="338" x2="450" y2="364" marker-end="url(#ar)"/>
+  <text class="lbl" x="460" y="356">oui</text>
+
+  <!-- submit -->
+  <rect class="act" x="345" y="366" width="210" height="44" rx="18"/><text class="at" x="450" y="393">Soumettre à validation</text>
+  <text class="state" x="610" y="392">statut: in_review</text>
+  <line class="flow" x1="450" y1="410" x2="450" y2="436" marker-end="url(#ar)"/>
+
+  <!-- decision admin -->
+  <polygon class="dec" points="450,438 560,488 450,538 340,488"/>
+  <text class="dt" x="450" y="483">Décision</text>
+  <text class="dt" x="450" y="498">admin</text>
+  <!-- rejected -> back to enrich -->
+  <path class="flow" d="M560 488 H700 V192 H570" marker-end="url(#ar)"/>
+  <text class="lbl" x="640" y="300">rejeté → draft</text>
+  <!-- approved -->
+  <line class="flow" x1="450" y1="538" x2="450" y2="564" marker-end="url(#ar)"/>
+  <text class="lbl" x="460" y="556">validé</text>
+
+  <!-- publish -->
+  <rect class="act" x="350" y="566" width="200" height="44" rx="18"/><text class="at" x="450" y="588">Publier sur le(s) canal(aux)</text>
+  <text class="at" x="450" y="603" font-size="10" fill="#64748b">statut: approved → published</text>
+  <line class="flow" x1="450" y1="610" x2="450" y2="640" marker-end="url(#ar)"/>
+
+  <!-- end -->
+  <circle cx="450" cy="652" r="13" fill="none" stroke="#1e293b" stroke-width="2"/>
+  <circle cx="450" cy="652" r="7" fill="#1e293b"/>
+</svg>

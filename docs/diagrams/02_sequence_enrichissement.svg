@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" font-family="Inter, Arial, sans-serif">
+  <rect width="1000" height="640" fill="#ffffff"/>
+  <text x="500" y="30" text-anchor="middle" font-size="19" font-weight="800" fill="#1e293b">Séquence — Enrichissement collaboratif d'un produit</text>
+  <style>
+    .ll{stroke:#94a3b8;stroke-width:1;stroke-dasharray:4 4}
+    .head{fill:#eef2ff;stroke:#6366f1;stroke-width:1.5}
+    .ht{font-size:12px;font-weight:700;fill:#3730a3;text-anchor:middle}
+    .msg{stroke:#1e293b;stroke-width:1.4}
+    .ret{stroke:#10b981;stroke-width:1.2;stroke-dasharray:5 3}
+    .mt{font-size:11px;fill:#1e293b}
+    .rt{font-size:11px;fill:#047857}
+    .act{fill:#c7d2fe;stroke:#6366f1}
+    .note{fill:#fef3c7;stroke:#f59e0b}
+    .nt{font-size:10px;fill:#92400e}
+  </style>
+
+  <!-- lifelines -->
+  <g>
+    <rect class="head" x="40"  y="55" width="120" height="34" rx="6"/><text class="ht" x="100" y="77">Marketing</text>
+    <rect class="head" x="250" y="55" width="120" height="34" rx="6"/><text class="ht" x="310" y="77">Frontend React</text>
+    <rect class="head" x="460" y="55" width="120" height="34" rx="6"/><text class="ht" x="520" y="77">API FastAPI</text>
+    <rect class="head" x="660" y="55" width="140" height="34" rx="6"/><text class="ht" x="730" y="71">Moteur</text><text class="ht" x="730" y="84">complétude</text>
+    <rect class="head" x="860" y="55" width="100" height="34" rx="6"/><text class="ht" x="910" y="77">BDD</text>
+  </g>
+  <line class="ll" x1="100" y1="89" x2="100" y2="600"/>
+  <line class="ll" x1="310" y1="89" x2="310" y2="600"/>
+  <line class="ll" x1="520" y1="89" x2="520" y2="600"/>
+  <line class="ll" x1="730" y1="89" x2="730" y2="600"/>
+  <line class="ll" x1="910" y1="89" x2="910" y2="600"/>
+
+  <!-- messages -->
+  <g>
+    <line class="msg" x1="100" y1="120" x2="305" y2="120" marker-end="url(#a)"/>
+    <text class="mt" x="110" y="115">Ouvre la fiche produit</text>
+
+    <line class="msg" x1="310" y1="150" x2="515" y2="150" marker-end="url(#a)"/>
+    <text class="mt" x="320" y="145">GET /products/{id}</text>
+    <line class="msg" x1="520" y1="178" x2="905" y2="178" marker-end="url(#a)"/>
+    <text class="mt" x="560" y="173">SELECT produit + valeurs + assets</text>
+    <line class="ret" x1="905" y1="200" x2="315" y2="200" marker-end="url(#b)"/>
+    <text class="rt" x="560" y="195">ProductDetail (FR/EN)</text>
+
+    <line class="msg" x1="100" y1="235" x2="305" y2="235" marker-end="url(#a)"/>
+    <text class="mt" x="110" y="230">Saisit attributs + traductions</text>
+
+    <line class="msg" x1="310" y1="265" x2="515" y2="265" marker-end="url(#a)"/>
+    <text class="mt" x="318" y="260">PUT /products/{id} { values[] }</text>
+
+    <rect class="act" x="514" y="265" width="12" height="150"/>
+
+    <line class="msg" x1="520" y1="295" x2="905" y2="295" marker-end="url(#a)"/>
+    <text class="mt" x="560" y="290">UPSERT AttributeValue (attr, locale)</text>
+
+    <line class="msg" x1="526" y1="335" x2="725" y2="335" marker-end="url(#a)"/>
+    <text class="mt" x="540" y="330">compute_completeness()</text>
+    <line class="ret" x1="725" y1="360" x2="528" y2="360" marker-end="url(#b)"/>
+    <text class="rt" x="560" y="355">score + champs manquants</text>
+
+    <line class="msg" x1="520" y1="395" x2="905" y2="395" marker-end="url(#a)"/>
+    <text class="mt" x="560" y="390">UPDATE produit.completeness</text>
+
+    <line class="ret" x1="514" y1="435" x2="315" y2="435" marker-end="url(#b)"/>
+    <text class="rt" x="330" y="430">ProductDetail mis à jour</text>
+
+    <line class="ret" x1="310" y1="465" x2="105" y2="465" marker-end="url(#b)"/>
+    <text class="rt" x="120" y="460">Affiche score + jauge</text>
+  </g>
+
+  <!-- note -->
+  <rect class="note" x="430" y="500" width="360" height="60" rx="8"/>
+  <text class="nt" x="445" y="520">Règle métier : la complétude est recalculée à chaque</text>
+  <text class="nt" x="445" y="536">modification de valeur ou d'image. Elle liste explicitement</text>
+  <text class="nt" x="445" y="552">les champs requis manquants (toutes langues requises).</text>
+
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#1e293b"/></marker>
+    <marker id="b" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#10b981"/></marker>
+  </defs>
+</svg>

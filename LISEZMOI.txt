@@ -1,0 +1,106 @@
+PIMP - Plateforme de Product Information Management
+Projet dev4pimp25 - INSTA
+Equipe : EFTEKHARI Philippe Sam . IMLI Anass
+Encadrant : BM. Bui-Xuan
+
+====================================================================
+PRESENTATION
+====================================================================
+Plateforme PIM (referentiel unique de donnees produits) combinant :
+  1) Ingestion d'etiquette par IA de VISION (Google Gemini) : on depose
+     la photo d'une etiquette, l'IA lit l'image et pre-remplit la fiche
+     produit ; l'utilisateur verifie/corrige puis enregistre
+     (human-in-the-loop). Upsert sur l'EAN : pas de doublon.
+  2) Gestion PIM complete : catalogue a grande echelle, attributs
+     dynamiques par famille, multilingue FR/EN, score de completude,
+     workflow (brouillon -> en revue -> valide -> publie) avec roles,
+     et diffusion omnicanale.
+
+(Astuce : ouvre ce fichier avec le Bloc-notes. Le README.md est la
+meme chose au format Markdown, a ouvrir avec VS Code - pas avec Word.)
+
+====================================================================
+LIVRABLES (a la racine de ce dossier)
+====================================================================
+  - rapport_synthese.docx   : document de synthese (~12 pages)
+  - presentation.pptx       : support de soutenance (~25 slides)
+  - backend/                : API FastAPI (code source commente)
+  - frontend/               : interface React (code source commente)
+  - docs/                   : diagrammes (architecture, modele, sequences, gantt)
+  - etiquette-*.jpg         : etiquettes d'exemple pour la demo
+
+====================================================================
+ARCHITECTURE
+====================================================================
+  Frontend   : React 18 + Vite (interface web)
+  Backend    : FastAPI (Python) - API REST
+  Donnees    : SQLAlchemy - SQLite (dev) / PostgreSQL (prod)
+  Auth       : JWT + roles (admin, marketing, achats, fournisseur)
+  Extraction : IA de vision Google Gemini (cle cote serveur, jamais exposee)
+
+====================================================================
+DEMARRAGE LE PLUS SIMPLE (Windows)
+====================================================================
+Double-clique sur start.bat. Au premier lancement il demande ta cle
+Gemini gratuite (https://aistudio.google.com/apikey), installe tout,
+peuple la base puis ouvre l'interface.
+
+  -> Interface : http://localhost:5173
+  -> API / doc : http://localhost:8000/docs
+
+macOS / Linux :  bash start.sh
+
+====================================================================
+DEMARRAGE - Docker (une seule commande)
+====================================================================
+    docker compose up --build
+  (la cle Gemini est lue depuis backend/.env)
+
+====================================================================
+DEMARRAGE - manuel (2 terminaux)
+====================================================================
+--- Terminal 1 : backend ---
+    cd backend
+    python -m venv .venv
+    #   Windows        :  .venv\Scripts\activate
+    #   macOS / Linux  :  source .venv/bin/activate
+    pip install -r requirements.txt
+    copy .env.example .env      (puis colle ta cle dans GEMINI_API_KEY)
+    python -m app.seed
+    uvicorn app.main:app --reload
+
+--- Terminal 2 : frontend ---
+    cd frontend
+    npm install
+    npm run dev
+    -> http://localhost:5173
+
+====================================================================
+COMPTES DE DEMONSTRATION
+====================================================================
+  admin       / admin123        (administrateur / data steward)
+  marketing   / marketing123    (marketing)
+  achats      / achats123        (achats)
+  fournisseur / fournisseur123   (fournisseur)
+
+  Note : seul l'administrateur peut valider et publier un produit.
+
+====================================================================
+TESTS AUTOMATISES (pytest)
+====================================================================
+    cd backend
+    pip install -r requirements-dev.txt
+    pytest
+
+====================================================================
+FONCTIONNALITES
+====================================================================
+  - Ingestion d'etiquette par IA de vision (drag-and-drop, extraction auto)
+  - Human-in-the-loop : l'IA pre-remplit, l'utilisateur valide
+  - Upsert sur l'EAN (pas de doublon, mise a jour si le produit existe)
+  - Catalogue a l'echelle : recherche, filtres, pagination (~610 produits)
+  - Fiche produit : attributs dynamiques, multilingue FR/EN, medias
+  - Qualite : score de completude + liste des champs manquants
+  - Workflow : brouillon -> en revue -> valide -> publie (regles par role)
+  - Diffusion omnicanale : e-commerce, marketplace, catalogue, mobile
+  - Tableau de bord : indicateurs de pilotage de la qualite

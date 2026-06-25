@@ -1,0 +1,27 @@
+# Lance toute la plateforme en une commande :  docker compose up --build
+# - backend  (FastAPI)     -> http://localhost:8000  (doc : /docs)
+# - frontend (React/nginx) -> http://localhost:5173
+#
+# La cle Gemini est lue depuis backend/.env (cf. backend/.env.example).
+services:
+  backend:
+    build: ./backend
+    env_file:
+      - ./backend/.env
+    environment:
+      # base persistee dans le volume monte sur /data (prioritaire sur .env)
+      - DATABASE_URL=sqlite:////data/pim.db
+    volumes:
+      - pim_data:/data
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  pim_data:

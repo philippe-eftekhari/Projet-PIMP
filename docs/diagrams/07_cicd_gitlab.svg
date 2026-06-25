@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 640" font-family="Inter, Arial, sans-serif">
+  <rect width="1080" height="640" fill="#ffffff"/>
+  <text x="540" y="32" text-anchor="middle" font-size="20" font-weight="800" fill="#1e293b">Stratégie Git &amp; pipeline GitLab CI/CD</text>
+
+  <!-- ===== Branch model ===== -->
+  <text x="40" y="72" font-size="14" font-weight="800" fill="#3730a3">Modèle de branches</text>
+  <style>
+    .lane{font-size:12px;font-weight:700}
+    .commit{fill:#fff;stroke-width:2}
+    .ln{stroke-width:3;fill:none}
+    .stage{fill:#eef2ff;stroke:#6366f1;stroke-width:1.5}
+    .stt{font-size:12px;font-weight:700;fill:#3730a3;text-anchor:middle}
+    .sts{font-size:9px;fill:#64748b;text-anchor:middle}
+  </style>
+
+  <!-- main -->
+  <text class="lane" x="40" y="110" fill="#16a34a">main</text>
+  <line class="ln" x1="120" y1="105" x2="1000" y2="105" stroke="#16a34a"/>
+  <circle class="commit" cx="200" cy="105" r="7" stroke="#16a34a"/>
+  <circle class="commit" cx="700" cy="105" r="7" stroke="#16a34a"/>
+  <circle class="commit" cx="930" cy="105" r="7" stroke="#16a34a"/>
+  <text class="sts" x="930" y="92">tag v1.0</text>
+
+  <!-- develop -->
+  <text class="lane" x="40" y="170" fill="#6366f1">develop</text>
+  <line class="ln" x1="120" y1="165" x2="1000" y2="165" stroke="#6366f1"/>
+  <circle class="commit" cx="260" cy="165" r="7" stroke="#6366f1"/>
+  <circle class="commit" cx="560" cy="165" r="7" stroke="#6366f1"/>
+  <circle class="commit" cx="820" cy="165" r="7" stroke="#6366f1"/>
+  <!-- main->develop start, develop->main release -->
+  <path class="ln" d="M200 105 C230 105 230 165 260 165" stroke="#94a3b8" stroke-width="2"/>
+  <path class="ln" d="M820 165 C880 165 880 105 930 105" stroke="#94a3b8" stroke-width="2"/>
+  <text class="sts" x="870" y="140">release (MR)</text>
+
+  <!-- feature -->
+  <text class="lane" x="40" y="230" fill="#f59e0b">feature/*</text>
+  <line class="ln" x1="360" y1="225" x2="560" y2="225" stroke="#f59e0b"/>
+  <circle class="commit" cx="420" cy="225" r="7" stroke="#f59e0b"/>
+  <circle class="commit" cx="500" cy="225" r="7" stroke="#f59e0b"/>
+  <path class="ln" d="M360 165 C340 165 340 225 360 225" stroke="#94a3b8" stroke-width="2"/>
+  <path class="ln" d="M560 225 C600 225 540 165 560 165" stroke="#94a3b8" stroke-width="2"/>
+  <text class="sts" x="460" y="252">merge request + revue de code</text>
+
+  <!-- hotfix -->
+  <text class="lane" x="40" y="300" fill="#ef4444">hotfix/*</text>
+  <line class="ln" x1="700" y1="295" x2="800" y2="295" stroke="#ef4444"/>
+  <circle class="commit" cx="750" cy="295" r="7" stroke="#ef4444"/>
+  <path class="ln" d="M700 105 C680 105 680 295 700 295" stroke="#94a3b8" stroke-width="2"/>
+  <path class="ln" d="M800 295 C840 295 900 105 930 105" stroke="#94a3b8" stroke-width="2"/>
+
+  <!-- ===== Pipeline ===== -->
+  <text x="40" y="368" font-size="14" font-weight="800" fill="#3730a3">Pipeline GitLab CI/CD (.gitlab-ci.yml)</text>
+  <line x1="40" y1="380" x2="1040" y2="380" stroke="#e2e8f0"/>
+
+  <!-- stages -->
+  <g>
+    <!-- positions -->
+    <!-- 8 stages -->
+    <g>
+      <rect class="stage" x="40"  y="410" width="110" height="60" rx="8"/><text class="stt" x="95"  y="438">install</text><text class="sts" x="95"  y="455">deps py + npm</text>
+      <rect class="stage" x="166" y="410" width="110" height="60" rx="8"/><text class="stt" x="221" y="438">lint</text><text class="sts" x="221" y="455">ruff / eslint</text>
+      <rect class="stage" x="292" y="410" width="110" height="60" rx="8"/><text class="stt" x="347" y="438">test</text><text class="sts" x="347" y="455">pytest</text>
+      <rect class="stage" x="418" y="410" width="120" height="60" rx="8"/><text class="stt" x="478" y="432">build front</text><text class="sts" x="478" y="449">vite build</text>
+      <rect class="stage" x="554" y="410" width="120" height="60" rx="8"/><text class="stt" x="614" y="432">build back</text><text class="sts" x="614" y="449">image API</text>
+      <rect class="stage" x="690" y="410" width="120" height="60" rx="8"/><text class="stt" x="750" y="432">build docker</text><text class="sts" x="750" y="449">push registry</text>
+      <rect class="stage" x="826" y="410" width="100" height="60" rx="8" fill="#fef3c7" stroke="#f59e0b"/><text class="stt" x="876" y="432" fill="#92400e">deploy test</text><text class="sts" x="876" y="449">auto</text>
+      <rect class="stage" x="942" y="410" width="100" height="60" rx="8" fill="#dcfce7" stroke="#16a34a"/><text class="stt" x="992" y="432" fill="#166534">deploy prod</text><text class="sts" x="992" y="449">manuel</text>
+    </g>
+    <!-- arrows -->
+    <g stroke="#94a3b8" stroke-width="2">
+      <line x1="150" y1="440" x2="166" y2="440"/>
+      <line x1="276" y1="440" x2="292" y2="440"/>
+      <line x1="402" y1="440" x2="418" y2="440"/>
+      <line x1="538" y1="440" x2="554" y2="440"/>
+      <line x1="674" y1="440" x2="690" y2="440"/>
+      <line x1="810" y1="440" x2="826" y2="440"/>
+      <line x1="926" y1="440" x2="942" y2="440"/>
+    </g>
+  </g>
+
+  <!-- triggers -->
+  <rect x="40" y="510" width="1000" height="100" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="60" y="536" font-size="12" font-weight="800" fill="#1e293b">Déclencheurs</text>
+  <text x="60" y="558" font-size="11" fill="#334155">• Push sur feature/* → install · lint · test (validation rapide avant merge request).</text>
+  <text x="60" y="578" font-size="11" fill="#334155">• Merge sur develop → pipeline complet jusqu'à deploy test (environnement de recette).</text>
+  <text x="60" y="598" font-size="11" fill="#334155">• Tag sur main → build images + deploy production (étape manuelle, validée par un responsable).</text>
+</svg>

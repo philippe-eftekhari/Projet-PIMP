@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Inter, Arial, sans-serif">
+  <rect width="960" height="560" fill="#ffffff"/>
+  <text x="480" y="34" text-anchor="middle" font-size="20" font-weight="800" fill="#1e293b">Modèle de données produit (master data)</text>
+  <style>
+    .ent{fill:#eef2ff;stroke:#6366f1;stroke-width:2;rx:10}
+    .t{font-size:13px;font-weight:800;fill:#3730a3}
+    .f{font-size:11px;fill:#475569}
+    .rel{stroke:#94a3b8;stroke-width:1.6;fill:none}
+    .lbl{font-size:10px;fill:#64748b}
+  </style>
+
+  <!-- Family -->
+  <rect class="ent" x="40" y="70" width="180" height="100" rx="10"/>
+  <text class="t" x="56" y="92">Family</text>
+  <text class="f" x="56" y="112">id, code, name</text>
+  <text class="f" x="56" y="130">description</text>
+
+  <!-- Attribute -->
+  <rect class="ent" x="40" y="220" width="180" height="120" rx="10"/>
+  <text class="t" x="56" y="242">Attribute</text>
+  <text class="f" x="56" y="262">id, code, label, type</text>
+  <text class="f" x="56" y="280">required, localizable</text>
+  <text class="f" x="56" y="298">options, unit</text>
+
+  <!-- Product -->
+  <rect class="ent" x="380" y="120" width="210" height="170" rx="10"/>
+  <text class="t" x="396" y="142">Product</text>
+  <text class="f" x="396" y="162">id, sku, name</text>
+  <text class="f" x="396" y="180">status, completeness</text>
+  <text class="f" x="396" y="198">family_id, category_id</text>
+  <text class="f" x="396" y="216">parent_id (variante)</text>
+  <text class="f" x="396" y="234">channels[]</text>
+  <text class="f" x="396" y="252">created_at, updated_at</text>
+
+  <!-- Category -->
+  <rect class="ent" x="380" y="360" width="210" height="90" rx="10"/>
+  <text class="t" x="396" y="382">Category</text>
+  <text class="f" x="396" y="402">id, name</text>
+  <text class="f" x="396" y="420">parent_id (hiérarchie)</text>
+
+  <!-- AttributeValue -->
+  <rect class="ent" x="700" y="70" width="220" height="110" rx="10"/>
+  <text class="t" x="716" y="92">AttributeValue</text>
+  <text class="f" x="716" y="112">id, product_id</text>
+  <text class="f" x="716" y="130">attribute_id, locale</text>
+  <text class="f" x="716" y="148">value</text>
+
+  <!-- Asset -->
+  <rect class="ent" x="700" y="210" width="220" height="90" rx="10"/>
+  <text class="t" x="716" y="232">Asset</text>
+  <text class="f" x="716" y="252">id, product_id, type</text>
+  <text class="f" x="716" y="270">url, alt, position</text>
+
+  <!-- WorkflowLog -->
+  <rect class="ent" x="700" y="330" width="220" height="100" rx="10"/>
+  <text class="t" x="716" y="352">WorkflowLog</text>
+  <text class="f" x="716" y="372">id, product_id</text>
+  <text class="f" x="716" y="390">from_status, to_status</text>
+  <text class="f" x="716" y="408">user, comment, date</text>
+
+  <!-- User -->
+  <rect class="ent" x="40" y="400" width="180" height="90" rx="10"/>
+  <text class="t" x="56" y="422">User</text>
+  <text class="f" x="56" y="442">id, username</text>
+  <text class="f" x="56" y="460">role, hashed_password</text>
+
+  <!-- relations -->
+  <path class="rel" d="M220 120 H300 V205 H380"/><text class="lbl" x="300" y="118">1—N</text>
+  <path class="rel" d="M220 270 H300 V205 H380" stroke-dasharray="3 3"/><text class="lbl" x="240" y="262">famille définit attributs</text>
+  <path class="rel" d="M590 150 H700 V125"/><text class="lbl" x="600" y="142">1—N valeurs</text>
+  <path class="rel" d="M590 200 H700 V255"/><text class="lbl" x="600" y="216">1—N assets</text>
+  <path class="rel" d="M590 250 H700 V380"/><text class="lbl" x="600" y="300">1—N logs</text>
+  <path class="rel" d="M485 290 V360"/><text class="lbl" x="490" y="330">N—1 catégorie</text>
+</svg>
