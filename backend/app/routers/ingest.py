@@ -10,6 +10,10 @@ Parcours "human-in-the-loop" :
 
 Les produits ingeres rejoignent la famille "Grande consommation" (GRAND) et
 suivent ensuite le meme cycle de vie / workflow que le reste du referentiel.
+
+Note : l'extraction et l'enregistrement ne demandent pas d'authentification
+(comme une borne de depot fournisseur). La gouvernance (validation, publication)
+reste, elle, protegee par les roles dans le module workflow.
 """
 import os
 import uuid
@@ -20,7 +24,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from .. import models, auth, completeness, schemas
+from .. import models, completeness, schemas
 from ..services import extraction
 
 router = APIRouter(prefix="/api/ingest", tags=["ingest"])
@@ -97,10 +101,7 @@ def _set_value(db: Session, product: models.Product, attr: models.Attribute,
 # Endpoints
 # --------------------------------------------------------------------------
 @router.post("/extract")
-async def extract(
-    etiquette: UploadFile = File(...),
-    user: models.User = Depends(auth.get_current_user),
-):
+async def extract(etiquette: UploadFile = File(...)):
     """Lit l'etiquette via l'IA de vision et renvoie la fiche pre-remplie (sans sauvegarder)."""
     if not etiquette.content_type or not etiquette.content_type.startswith("image/"):
         raise HTTPException(400, "Image uniquement (JPG, PNG, WEBP). Pour un PDF, convertissez-le en image.")
@@ -126,8 +127,7 @@ async def extract(
 
 
 @router.post("/save", response_model=schemas.ProductDetail)
-def save(payload: IngestSave, db: Session = Depends(get_db),
-         user: models.User = Depends(auth.get_current_user)):
+def save(payload: IngestSave, db: Session = Depends(get_db)):
     """Enregistre la fiche validee (upsert sur l'EAN) dans la famille GRAND."""
     if not payload.nom_produit or not payload.nom_produit.strip():
         raise HTTPException(400, "Le nom du produit est obligatoire.")
@@ -177,8 +177,7 @@ def save(payload: IngestSave, db: Session = Depends(get_db),
     for field, code in FIELD_TO_ATTR.items():
         if code in attrs:
             value = getattr(payload, field) or ""
-            locale = "fr"
-            _set_value(db, product, attrs[code], value, locale)
+            _set_value(db, product, attrs[code], value, "fr")
 
     # composition -> attribut texte agrege "libelle: valeur; ..."
     if "composition" in attrs and payload.composition:

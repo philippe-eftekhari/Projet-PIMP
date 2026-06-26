@@ -11,10 +11,10 @@ const NAVY = "1E2761", IND = "6366F1", IND2 = "818CF8", ICE = "CADCFC",
 const HF = "Georgia", BF = "Calibri";
 
 let n = 0;
-function pageNum(s, dark) {
+function pageNum(s) {
   n++;
   s.addText(String(n).padStart(2, "0"), { x: W - 0.9, y: H - 0.5, w: 0.6, h: 0.3,
-    fontSize: 10, color: dark ? ICE : GREY, align: "right", fontFace: BF });
+    fontSize: 10, color: GREY, align: "right", fontFace: BF });
 }
 function tag(s, text, color) {
   s.addShape(p.shapes.ROUNDED_RECTANGLE, { x: 0.7, y: 0.55, w: 2.6, h: 0.42,
@@ -31,7 +31,7 @@ function content(tagText, title) {
   tag(s, tagText, col);
   s.addText(title, { x: 0.7, y: 1.05, w: W - 1.4, h: 0.8, fontSize: 28, bold: true, color: NAVY, fontFace: HF });
   s.addShape(p.shapes.LINE, { x: 0.7, y: 1.82, w: 2.2, h: 0, line: { color: col, width: 2.5 } });
-  pageNum(s, false);
+  pageNum(s);
   return s;
 }
 function card(s, x, y, w, h, opts = {}) {
@@ -50,7 +50,7 @@ function imageSlide(tagText, title, file, wpx, hpx, caption) {
   return s;
 }
 
-// 1. TITLE
+// ===== 1. TITLE =====
 let s = p.addSlide();
 s.background = { color: NAVY };
 s.addShape(p.shapes.OVAL, { x: 9.5, y: -2.2, w: 6, h: 6, fill: { color: IND, transparency: 65 } });
@@ -64,12 +64,12 @@ s.addText([
   { text: "Encadrant : BM. Bui-Xuan  -  Juin 2026", options: { fontSize: 14, color: ICE } },
 ], { x: 1.0, y: 4.4, w: 9, h: 1.5, fontFace: BF, lineSpacingMultiple: 1.3 });
 
-// 2. SOMMAIRE
+// ===== 2. SOMMAIRE =====
 s = content("Sommaire", "Deroule de la presentation");
 const agenda = [
-  ["1", "Introduction", "Equipe . marche . objectif . solution . technologies . planning", IND, "5 min"],
-  ["2", "Demonstration", "Ingestion IA . plateforme . utilisateurs . bilan de developpement", GREEN, "2-3 min"],
-  ["3", "Partie technique", "Architecture . extraction IA . donnees . backend . tests . CI/CD", BLUE, "10-15 min"],
+  ["1", "Introduction", "Equipe . objectif . solution . technologies . planning", IND, "5 min"],
+  ["2", "Demonstration", "Ingestion IA . fonctionnalites . utilisateurs", GREEN, "2-3 min"],
+  ["3", "Partie technique", "Architecture . extraction IA . backend . tests", BLUE, "10-15 min"],
 ];
 agenda.forEach((a, i) => {
   const y = 2.25 + i * 1.45;
@@ -81,7 +81,7 @@ agenda.forEach((a, i) => {
   s.addText(a[4], { x: 10.6, y: y + 0.35, w: 1.8, h: 0.5, fontSize: 14, bold: true, color: a[3], align: "right", fontFace: BF });
 });
 
-// 3. EQUIPE & OBJECTIF
+// ===== 3. EQUIPE & OBJECTIF =====
 s = content("Introduction", "Equipe & objectif du projet");
 card(s, 0.7, 2.1, 5.6, 4.5, { fill: NAVY, line: NAVY });
 s.addText("L'equipe", { x: 1.0, y: 2.35, w: 5, h: 0.5, fontSize: 18, bold: true, color: ICE, fontFace: BF });
@@ -94,38 +94,17 @@ s.addText([
 ], { x: 1.0, y: 3.0, w: 5, h: 3, fontFace: BF, lineSpacingMultiple: 1.2 });
 card(s, 6.6, 2.1, 5.9, 4.5);
 s.addText("Objectif", { x: 6.9, y: 2.35, w: 5, h: 0.5, fontSize: 18, bold: true, color: IND, fontFace: BF });
-s.addText("Concevoir une plateforme web de Product Information Management : une porte d'entree intelligente (ingestion d'etiquette par IA) et un referentiel unique enrichi puis diffuse vers tous les canaux.",
-  { x: 6.9, y: 2.95, w: 5.3, h: 1.5, fontSize: 15, color: DARK, fontFace: BF, lineSpacingMultiple: 1.25 });
+s.addText("Une plateforme PIM : une porte d'entree intelligente (ingestion d'etiquette par IA) et un referentiel unique enrichi puis diffuse vers tous les canaux de vente. Marche du PIM : 13-15 Mds $, > 30 Mds $ d'ici 2030.",
+  { x: 6.9, y: 2.95, w: 5.3, h: 1.6, fontSize: 14.5, color: DARK, fontFace: BF, lineSpacingMultiple: 1.25 });
 s.addText([
   { text: "Ingestion d'etiquette par IA de vision", options: { bullet: true, breakLine: true } },
   { text: "Centraliser (referentiel unique)", options: { bullet: true, breakLine: true } },
   { text: "Enrichissement collaboratif multilingue", options: { bullet: true, breakLine: true } },
   { text: "Gouvernance par workflow et roles", options: { bullet: true, breakLine: true } },
   { text: "Diffusion omnicanale", options: { bullet: true } },
-], { x: 6.9, y: 4.5, w: 5.3, h: 2.0, fontSize: 14, color: NAVY, fontFace: BF, lineSpacingMultiple: 1.2 });
+], { x: 6.9, y: 4.55, w: 5.3, h: 2.0, fontSize: 14, color: NAVY, fontFace: BF, lineSpacingMultiple: 1.2 });
 
-// 4. MARCHE & BESOINS
-s = content("Introduction", "Le marche du PIM & les besoins");
-const stats = [["13-15 Mds $", "Marche mondial actuel", IND], ["> 30 Mds $", "Projection 2030-2033", GREEN], ["> 15 %", "Croissance annuelle", AMBER]];
-stats.forEach((st, i) => {
-  const x = 0.7 + i * 4.0;
-  card(s, x, 2.15, 3.6, 1.65);
-  s.addText(st[0], { x, y: 2.35, w: 3.6, h: 0.8, fontSize: 30, bold: true, color: st[2], align: "center", fontFace: HF });
-  s.addText(st[1], { x: x + 0.2, y: 3.2, w: 3.2, h: 0.5, fontSize: 13, color: GREY, align: "center", fontFace: BF });
-});
-const needs = [["Faire entrer la donnee", "ingestion automatique"], ["Centraliser", "referentiel unique"], ["Passer a l'echelle", "fort volume de SKU"], ["Enrichir a plusieurs", "marketing, achats, fournisseurs"], ["Diffuser partout", "e-commerce, marketplace, mobile"], ["Garantir la qualite", "coherence & completude"]];
-needs.forEach((nd, i) => {
-  const col = i % 3, row = Math.floor(i / 3);
-  const x = 0.7 + col * 4.0, y = 4.1 + row * 1.15;
-  const w = 3.7;
-  card(s, x, y, w, 1.0);
-  s.addShape(p.shapes.OVAL, { x: x + 0.18, y: y + 0.28, w: 0.44, h: 0.44, fill: { color: IND } });
-  s.addText(String(i + 1), { x: x + 0.18, y: y + 0.28, w: 0.44, h: 0.44, fontSize: 14, bold: true, color: WHITE, align: "center", valign: "middle", fontFace: HF });
-  s.addText(nd[0], { x: x + 0.75, y: y + 0.16, w: w - 0.85, h: 0.4, fontSize: 14, bold: true, color: NAVY, fontFace: BF });
-  s.addText(nd[1], { x: x + 0.75, y: y + 0.55, w: w - 0.85, h: 0.35, fontSize: 11.5, color: GREY, fontFace: BF });
-});
-
-// 5. SOLUTION
+// ===== 4. SOLUTION =====
 s = content("Introduction", "La solution : application web 3-tiers");
 const layers = [
   ["Frontend - React 18 + Vite", "Interface SPA : ingestion, catalogue, editeur, diffusion", IND],
@@ -141,7 +120,7 @@ layers.forEach((l, i) => {
   if (i < 2) s.addText("flux", { x: 6.5, y: y + 1.12, w: 0.6, h: 0.3, fontSize: 10, color: GREY, align: "center" });
 });
 
-// 6. CHOIX TECHNO
+// ===== 5. CHOIX TECHNO =====
 s = content("Introduction", "Choix technologiques justifies");
 const rows = [
   ["Backend", "FastAPI", "Django / Express / Spring", "Async, validation Pydantic, doc OpenAPI auto"],
@@ -163,11 +142,11 @@ rows.forEach((r, i) => {
 s.addTable(tbl, { x: 0.7, y: 2.3, w: 11.9, colW: [1.8, 2.2, 3.0, 4.9], fontSize: 13, fontFace: BF,
   border: { type: "solid", color: LINE, pt: 1 }, rowH: 0.7, valign: "middle", margin: 6 });
 
-// 7. GANTT
+// ===== 6. GANTT =====
 imageSlide("Introduction", "Gestion de projet & charge", "gantt.png", 960, 420,
   "Approche iterative sur 6 semaines . charge estimee ~41 jours-hommes (equipe de 2)");
 
-// 8. INGESTION PAR IA (demonstration - fonctionnalite phare)
+// ===== 7. INGESTION PAR IA (demo - fonctionnalite phare) =====
 s = content("Demonstration", "Fonctionnalite phare : ingestion par IA de vision");
 const flow = [
   ["1. Depot", "Le fournisseur glisse la photo d'une etiquette (JPG/PNG)", IND],
@@ -185,11 +164,11 @@ flow.forEach((f, i) => {
 s.addText("Pourquoi une IA de vision plutot qu'un OCR : les vraies etiquettes (bouteilles courbees, logos, photos) ne sont pas lisibles par un OCR ligne a ligne.",
   { x: 0.9, y: 6.55, w: 11.5, h: 0.5, fontSize: 13, italic: true, color: GREY, align: "center", fontFace: BF });
 
-// 9. CAS D'UTILISATION
+// ===== 8. CAS D'UTILISATION =====
 imageSlide("Demonstration", "Cas d'utilisation & acteurs", "diagrams/01_cas_utilisation.png", 1000, 660,
   "4 acteurs internes + le canal externe ; la validation/publication est reservee a l'administrateur");
 
-// 10. UTILISATEURS & ROLES
+// ===== 9. UTILISATEURS & ROLES =====
 s = content("Demonstration", "Les utilisateurs et leurs roles");
 const roles = [
   ["Administrateur", "Data steward : valide, publie, gere le referentiel", IND],
@@ -205,10 +184,10 @@ roles.forEach((r, i) => {
   s.addText(r[0], { x: x + 0.1, y: 3.8, w: 2.55, h: 0.5, fontSize: 16, bold: true, color: NAVY, align: "center", fontFace: BF });
   s.addText(r[1], { x: x + 0.2, y: 4.3, w: 2.35, h: 1.0, fontSize: 12.5, color: GREY, align: "center", fontFace: BF });
 });
-s.addText("Gouvernance par roles (RBAC) reproduisant l'organisation reelle de l'enrichissement collaboratif.",
-  { x: 0.7, y: 5.8, w: 11.9, h: 0.5, fontSize: 14, italic: true, color: GREY, align: "center", fontFace: BF });
+s.addText("Gouvernance par roles (RBAC) reproduisant l'organisation reelle de l'enrichissement collaboratif. Conclusion de la phase de dev : modeliser la donnee d'abord, garder l'humain dans la boucle.",
+  { x: 0.7, y: 5.75, w: 11.9, h: 0.7, fontSize: 13.5, italic: true, color: GREY, align: "center", fontFace: BF });
 
-// 11. PARCOURS / FONCTIONNALITES
+// ===== 10. PARCOURS / FONCTIONNALITES =====
 s = content("Demonstration", "Parcours & fonctionnalites cles");
 const steps = [
   ["Ingestion", "Depot d'etiquette -> extraction IA -> fiche pre-remplie"],
@@ -231,26 +210,11 @@ s.addText("A inserer ici", { x: 9.4, y: 2.4, w: 2.9, h: 0.4, fontSize: 13, bold:
 s.addText("Captures d'ecran de la plateforme (ingestion, tableau de bord, fiche produit, diffusion).",
   { x: 9.4, y: 2.85, w: 2.9, h: 3.0, fontSize: 13, color: "92400E", fontFace: BF, lineSpacingMultiple: 1.2 });
 
-// 12. BILAN DEV
-s = content("Demonstration", "Enseignements de la phase de developpement");
-const lessons = [
-  ["La porte d'entree d'abord", "Faire entrer la donnee proprement (ingestion IA + revue humaine) est aussi important que la stocker."],
-  ["Qualite explicable, pas magique", "Un score de completude qui liste les champs manquants est plus utile qu'un indicateur opaque."],
-  ["Decouplage front / back", "L'API REST + JWT et l'IA isolee dans un service permettent de faire evoluer chaque brique independamment."],
-];
-lessons.forEach((l, i) => {
-  const y = 2.3 + i * 1.45;
-  card(s, 0.7, y, 11.8, 1.25);
-  s.addShape(p.shapes.RECTANGLE, { x: 0.7, y, w: 0.14, h: 1.25, fill: { color: GREEN } });
-  s.addText(l[0], { x: 1.05, y: y + 0.18, w: 11, h: 0.45, fontSize: 17, bold: true, color: NAVY, fontFace: BF });
-  s.addText(l[1], { x: 1.05, y: y + 0.62, w: 11.2, h: 0.55, fontSize: 13.5, color: GREY, fontFace: BF });
-});
-
-// 13. ARCHITECTURE
+// ===== 11. ARCHITECTURE =====
 imageSlide("Technique", "Architecture trois tiers", "architecture.png", 980, 620,
   "Presentation (React) . Metier (FastAPI + IA de vision) . Donnees (SQLAlchemy) - couplage faible par API REST/JWT");
 
-// 14. EXTRACTION PAR IA (technique)
+// ===== 12. EXTRACTION PAR IA =====
 s = content("Technique", "Extraction par IA de vision (Gemini)");
 card(s, 0.7, 2.3, 5.7, 4.2);
 s.addText("Principe", { x: 1.0, y: 2.5, w: 5, h: 0.5, fontSize: 17, bold: true, color: IND, fontFace: BF });
@@ -266,15 +230,11 @@ s.addText("Sortie structuree (exemple)", { x: 6.9, y: 2.5, w: 5, h: 0.5, fontSiz
 s.addText('{\n  "nom_produit": "Evian 1,5 L",\n  "marque": "Evian",\n  "ean": "3068320123456",\n  "categorie": "Eau",\n  "contenance": "1,5 L",\n  "pays_origine": "France",\n  "composition": [\n    {"libelle":"Calcium","valeur":"80 mg/L"}\n  ]\n}',
   { x: 6.9, y: 3.05, w: 5.4, h: 3.2, fontSize: 12, color: DARK, fontFace: "Consolas", lineSpacingMultiple: 1.1 });
 
-// 15. DEPLOIEMENT
-imageSlide("Technique", "Architecture de deploiement", "diagrams/06_deploiement.png", 1000, 620,
-  "Conteneurs Docker : nginx (frontend + reverse proxy), API FastAPI, base en volume persistant");
-
-// 16. MCD MERISE
+// ===== 13. MCD MERISE =====
 imageSlide("Technique", "Modele de donnees (MCD Merise)", "diagrams/05_mcd_merise.png", 1120, 800,
   "L'association valorise porte valeur + langue -> table AttributeValue dans le MLD (multilingue natif)");
 
-// 17. BACKEND & API
+// ===== 14. BACKEND & API =====
 s = content("Technique", "Backend & API REST");
 card(s, 0.7, 2.3, 5.7, 4.2);
 s.addText("Organisation du code", { x: 1.0, y: 2.5, w: 5, h: 0.5, fontSize: 17, bold: true, color: IND, fontFace: BF });
@@ -298,7 +258,7 @@ s.addText([
   { text: "GET  /dashboard", options: { color: NAVY } },
 ], { x: 6.9, y: 3.05, w: 5.4, h: 3.3, fontSize: 12.5, fontFace: "Consolas", lineSpacingMultiple: 1.3 });
 
-// 18. COMPLETUDE
+// ===== 15. COMPLETUDE =====
 s = content("Technique", "Moteur de qualite : la completude");
 card(s, 0.7, 2.3, 11.8, 1.6, { fill: NAVY, line: NAVY });
 s.addText("Completude = part des attributs requis renseignes (toutes langues requises) + au moins une image",
@@ -314,7 +274,7 @@ s.addText("Pourquoi c'est utile", { x: 6.9, y: 4.4, w: 5, h: 0.4, fontSize: 14, 
 s.addText("Le tableau de bord agrege ces scores (completude moyenne, distribution, produits incomplets) : l'effort d'enrichissement est priorise objectivement, meme sur des produits deja valides.",
   { x: 6.9, y: 4.85, w: 5.4, h: 1.4, fontSize: 13.5, color: DARK, fontFace: BF, lineSpacingMultiple: 1.2 });
 
-// 19. WORKFLOW & GOUVERNANCE
+// ===== 16. WORKFLOW & GOUVERNANCE =====
 s = content("Technique", "Workflow & gouvernance");
 const wf = [["Brouillon", "475569"], ["En revue", AMBER], ["Valide", GREEN], ["Publie", BLUE]];
 wf.forEach((w2, i) => {
@@ -336,19 +296,11 @@ ru.forEach((r, i) => {
   s.addText(r, { x: 2.35, y, w: 9.3, h: 0.75, fontSize: 15, color: DARK, valign: "middle", fontFace: BF });
 });
 
-// 20. ACTIVITE WORKFLOW
-imageSlide("Technique", "Diagramme d'activite - cycle de vie", "diagrams/04_activite_workflow.png", 900, 720,
-  "Le produit ne progresse que si les regles de completude et de role sont satisfaites");
-
-// 21. SEQUENCE ENRICHISSEMENT
-imageSlide("Technique", "Sequence - enrichissement d'un produit", "diagrams/02_sequence_enrichissement.png", 1000, 640,
-  "La completude est recalculee cote serveur a chaque modification de valeur ou d'image");
-
-// 22. SEQUENCE VALIDATION
+// ===== 17. SEQUENCE VALIDATION =====
 imageSlide("Technique", "Sequence - validation & publication", "diagrams/03_sequence_validation_publication.png", 1000, 660,
   "Controles de gouvernance (completude, role) avant publication ; export tire par le canal");
 
-// 23. DIFFUSION
+// ===== 18. DIFFUSION =====
 s = content("Technique", "Diffusion omnicanale : une donnee, N projections");
 const ch = [
   ["E-commerce", "JSON enrichi", "Descriptions FR+EN, attributs complets, images", IND],
@@ -366,7 +318,7 @@ ch.forEach((c, i) => {
   s.addText(c[2], { x: x + 0.35, y: y + 1.12, w: 5.2, h: 0.5, fontSize: 12.5, color: GREY, fontFace: BF });
 });
 
-// 24. TESTS
+// ===== 19. TESTS =====
 s = content("Technique", "Phase de test (pytest)");
 const ts = [["12", "tests verts"], ["5", "domaines"], ["~610", "produits (volumetrie)"], ["60 %", "seuil de gouvernance teste"]];
 ts.forEach((t, i) => {
@@ -393,35 +345,25 @@ const mtbl = [["Famille de tests", "Scenario", "Statut"].map(t => ({ text: t, op
 s.addTable(mtbl, { x: 0.7, y: 3.95, w: 11.9, colW: [3.4, 6.5, 2.0], fontSize: 13, fontFace: BF,
   border: { type: "solid", color: LINE, pt: 1 }, rowH: 0.5, valign: "middle", margin: 6 });
 
-// 25. GIT & CI/CD
-imageSlide("Technique", "Git & integration continue (GitLab CI/CD)", "diagrams/07_cicd_gitlab.png", 1080, 640,
-  "Test & build fonctionnels ; deploiement prevu/simule (jobs manuels sur une infra reelle)");
-
-// 26. CONCLUSION
+// ===== 20. CONCLUSION & MERCI =====
 s = p.addSlide();
 s.background = { color: NAVY };
-s.addShape(p.shapes.OVAL, { x: -2, y: 4.5, w: 6, h: 6, fill: { color: IND, transparency: 70 } });
-s.addText("Conclusion & perspectives", { x: 0.9, y: 0.8, w: 11, h: 0.9, fontSize: 34, bold: true, color: WHITE, fontFace: HF });
-s.addShape(p.shapes.LINE, { x: 1.0, y: 1.75, w: 2.5, h: 0, line: { color: IND2, width: 3 } });
+s.addShape(p.shapes.OVAL, { x: -2, y: 4.2, w: 6, h: 6, fill: { color: IND, transparency: 70 } });
+s.addShape(p.shapes.OVAL, { x: 10, y: -2, w: 6, h: 6, fill: { color: IND2, transparency: 78 } });
+s.addText("Conclusion & perspectives", { x: 0.9, y: 0.7, w: 11.5, h: 0.9, fontSize: 32, bold: true, color: WHITE, fontFace: HF });
+s.addShape(p.shapes.LINE, { x: 1.0, y: 1.6, w: 2.5, h: 0, line: { color: IND2, width: 3 } });
 s.addText([
   { text: "PIMP demontre les fonctions essentielles d'un PIM : ", options: { color: ICE } },
-  { text: "ingestion d'etiquette par IA de vision, referentiel unique, enrichissement multilingue, pilotage par la completude, gouvernance par workflow, diffusion adaptee par canal.", options: { color: WHITE, bold: true } },
-], { x: 1.0, y: 2.1, w: 11, h: 1.3, fontSize: 18, fontFace: BF, lineSpacingMultiple: 1.3 });
-s.addText("Perspectives", { x: 1.0, y: 3.7, w: 5, h: 0.5, fontSize: 18, bold: true, color: IND2, fontFace: BF });
+  { text: "ingestion par IA de vision, referentiel unique, enrichissement multilingue, pilotage par la completude, gouvernance par workflow, diffusion adaptee par canal.", options: { color: WHITE, bold: true } },
+], { x: 1.0, y: 1.95, w: 11.3, h: 1.2, fontSize: 16.5, fontFace: BF, lineSpacingMultiple: 1.25 });
+s.addText("Perspectives", { x: 1.0, y: 3.25, w: 5, h: 0.4, fontSize: 16, bold: true, color: IND2, fontFace: BF });
 s.addText([
   { text: "Extraction par lot de plusieurs etiquettes", options: { bullet: true, breakLine: true } },
-  { text: "Import/export en masse (CSV, API fournisseurs)", options: { bullet: true, breakLine: true } },
-  { text: "Droits fins par attribut", options: { bullet: true, breakLine: true } },
-  { text: "Syndication temps reel vers les canaux", options: { bullet: true, breakLine: true } },
-  { text: "Connecteurs ERP / e-commerce", options: { bullet: true } },
-], { x: 1.0, y: 4.2, w: 11, h: 2.3, fontSize: 15, color: WHITE, fontFace: BF, lineSpacingMultiple: 1.3 });
+  { text: "Import/export en masse + connecteurs ERP / e-commerce", options: { bullet: true, breakLine: true } },
+  { text: "Syndication temps reel vers les canaux", options: { bullet: true } },
+], { x: 1.0, y: 3.65, w: 11, h: 1.3, fontSize: 14.5, color: WHITE, fontFace: BF, lineSpacingMultiple: 1.25 });
+s.addShape(p.shapes.LINE, { x: 1.0, y: 5.25, w: 11.3, h: 0, line: { color: "3A4170", width: 1 } });
+s.addText("Merci - Questions & demonstration", { x: 0.9, y: 5.5, w: 11.5, h: 0.8, fontSize: 30, bold: true, color: WHITE, fontFace: HF });
+s.addText("Projet dev4pimp25 - PIMP - Philippe Sam EFTEKHARI . Anass IMLI", { x: 1.0, y: 6.5, w: 11.5, h: 0.4, fontSize: 13, color: ICE, fontFace: BF });
 
-// 27. MERCI
-s = p.addSlide();
-s.background = { color: NAVY };
-s.addShape(p.shapes.OVAL, { x: 9, y: -2, w: 6.5, h: 6.5, fill: { color: IND, transparency: 65 } });
-s.addText("Merci", { x: 0.9, y: 2.6, w: 8, h: 1.2, fontSize: 66, bold: true, color: WHITE, fontFace: HF });
-s.addText("Questions & demonstration", { x: 1.0, y: 3.9, w: 8, h: 0.7, fontSize: 24, color: ICE, fontFace: BF });
-s.addText("Projet dev4pimp25 - PIMP - Philippe Sam EFTEKHARI . Anass IMLI", { x: 1.0, y: 4.8, w: 11, h: 0.5, fontSize: 14, color: ICE, fontFace: BF });
-
-p.writeFile({ fileName: "presentation.pptx" }).then((f) => console.log("Slides generees :", f, "."));
+p.writeFile({ fileName: "presentation.pptx" }).then((f) => console.log("Slides generees :", f));
